@@ -1,12 +1,29 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, {Component} from 'react';
+import { StyleSheet, Text, View, Alert } from 'react-native';
+import * as database from '../utils/storage'
 
-export default function DeckList() {
-  return (
-    <View style={styles.container}>
-      <Text>DeckList</Text>
-    </View>
-  );
+export default class DeckList extends Component {
+  state = {
+    loading: true
+  }
+
+  componentDidMount(){
+    database.addDeck("tes")
+    .then(() => {
+      return database.getDecks()
+    })
+    .then((decks) => {
+      this.setState(() => decks)
+    })
+  }
+
+  render(){
+    return (
+      <View style={styles.container}>
+        <Text>{JSON.stringify(this.state)}</Text>
+      </View>
+    )
+  }
 }
 
 const styles = StyleSheet.create({
