@@ -14,7 +14,7 @@ function Home() {
     <Stack.Screen name="Decks" component={Decks} />
     <Stack.Screen name="Deck" component={Deck} />
     <Stack.Screen name="Quiz" component={Quiz} />
-    <Stack.Screen name="AddCard" component={AddCard} />
+    <Stack.Screen name="Add Card" component={AddCard} />
   </Stack.Navigator>
   );
 }

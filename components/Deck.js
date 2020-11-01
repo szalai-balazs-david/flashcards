@@ -28,7 +28,7 @@ export default class Deck extends React.Component {
         </View>
         <View style={styles.container}>
           <TouchableOpacity 
-            onPress={() => navigation.navigate('AddCard')}
+            onPress={() => navigation.navigate('Add Card')}
             style={styles.container}
           >
             <Text 
