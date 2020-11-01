@@ -3,23 +3,33 @@ import { StyleSheet, FlatList, SafeAreaView, View, Text, Alert } from 'react-nat
 import {getDecks} from '../utils/storage'
 import DeckOverview from './DeckOverview'
 
-//ToDo: add loading
+//ToDo: utilize loading
 export default class DeckList extends Component {
   state = {
+    loading: true,
+    decks: {}
   }
 
   componentDidMount(){
     getDecks()
     .then((decks) => {
-      this.setState(() => decks)
+      this.setState({loading: false, decks})
+      this.focusSubscription = this.props.navigation.addListener(
+        'focus',
+        () => {
+          getDecks()
+          .then((newDecks) => {
+            this.setState({decks: newDecks})
+          })
+        }
+      )
     })
   }
 
-  componentDidUpdate(){
-    getDecks()
-    .then((decks) => {
-      this.setState(() => decks)
-    })
+  componentWillUnmount() {
+    if (this.focusSubscription) {
+      this.focusSubscription()
+    }
   }
 
   render(){
@@ -28,7 +38,7 @@ export default class DeckList extends Component {
     const renderItem = ({item}) => (
       <DeckOverview 
         name={item} 
-        cardCount={this.state[item].questions.length}
+        cardCount={this.state.decks[item].questions.length}
         onPress={() => navigation.navigate('Deck', {title: item})}
       />
     );
@@ -36,7 +46,7 @@ export default class DeckList extends Component {
     return (
       <SafeAreaView style={styles.container}>
         <FlatList 
-          data={Object.keys(this.state)}
+          data={Object.keys(this.state.decks)}
           renderItem={renderItem}
           keyExtractor={x => x}
           style={styles.list}

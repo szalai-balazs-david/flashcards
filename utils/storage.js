@@ -24,19 +24,15 @@ export async function getDeck(name) {
 
 export async function addDeck(name) {
   try {
-    getDecks()
-    .then((decks) => {
-      return{
-        ...decks,
-        [name]: {
-          title: name,
-          questions: []
-        }
+    const decks = await getDecks()
+    const newDecks = {
+      ...decks,
+      [name]: {
+        title: name,
+        questions: []
       }
-    })
-    .then(async (newDecks) => {
-      await saveDecks(newDecks)
-    })
+    }
+    await saveDecks(newDecks)
   } catch (e) {
     Alert.alert("addDeck", e)
   }
@@ -56,17 +52,11 @@ export async function removeDeck(name) {
 export async function addCard (name, question, answer) {
   try {
     const decks = await getDecks()
-    const newDecks = {
-      ...decks,
-      [name]:{
-        ...decks[name],
-        questions: decks[name].questions.concat({
-          question,
-          answer
-        })
-      }
-    }
-    await saveDecks(newDecks)
+    decks[name].questions = decks[name].questions.concat({
+      question,
+      answer
+    })
+    await saveDecks(decks)
   } catch (e) {
     Alert.alert("addCard", e)
   }

@@ -14,14 +14,22 @@ export default class Deck extends React.Component {
     getDeck(this.props.route.params.title)
     .then((deck) => {
       this.setState(() => deck)
+      this.focusSubscription = this.props.navigation.addListener(
+        'focus',
+        () => {
+          getDeck(this.props.route.params.title)
+          .then((newDeck) => {
+            this.setState({...newDeck})
+          })
+        }
+      )
     })
   }
 
-  componentDidUpdate(){
-    getDeck(this.props.route.params.title)
-    .then((deck) => {
-      this.setState(() => deck)
-    })
+  componentWillUnmount() {
+    if (this.focusSubscription) {
+      this.focusSubscription()
+    }
   }
 
   render(){
@@ -42,7 +50,7 @@ export default class Deck extends React.Component {
             onPress: () => 
               removeDeck(title)
               .then(() => {
-                navigation.push('Decks')
+                navigation.navigate('Decks')
               }),
             style: "default"
           }

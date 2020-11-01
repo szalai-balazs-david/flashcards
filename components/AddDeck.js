@@ -5,14 +5,15 @@ import {addDeck} from '../utils/storage'
 
 export default function AddDeck({navigation}) {  
 
+  const { control, handleSubmit, errors, reset } = useForm()
+
   const onSubmit = data => {
     addDeck(data.title)
     .then(() => {
+      reset()
       navigation.navigate('Home')
     })
   }
-
-  const { control, handleSubmit, errors } = useForm()
 
   return (
     <View style={styles.container}>
