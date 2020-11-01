@@ -1,17 +1,14 @@
 import React, {Component} from 'react';
-import { StyleSheet, Text, View, Alert } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import * as database from '../utils/storage'
+import Deck from './Deck'
 
 export default class DeckList extends Component {
   state = {
-    loading: true
   }
 
   componentDidMount(){
-    database.addDeck("tes")
-    .then(() => {
-      return database.getDecks()
-    })
+    database.getDecks()
     .then((decks) => {
       this.setState(() => decks)
     })
@@ -20,7 +17,8 @@ export default class DeckList extends Component {
   render(){
     return (
       <View style={styles.container}>
-        <Text>{JSON.stringify(this.state)}</Text>
+        {Object.keys(this.state)
+        .map(x => <Deck key={x} name={x}/>)}
       </View>
     )
   }
