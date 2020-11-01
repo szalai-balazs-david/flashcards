@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { StyleSheet, Button, View } from 'react-native';
-import * as database from '../utils/storage'
+import {getDecks} from '../utils/storage'
 import DeckOverview from './DeckOverview'
 
 export default class DeckList extends Component {
@@ -8,7 +8,7 @@ export default class DeckList extends Component {
   }
 
   componentDidMount(){
-    database.getDecks()
+    getDecks()
     .then((decks) => {
       this.setState(() => decks)
     })
@@ -22,9 +22,10 @@ export default class DeckList extends Component {
         .map(x => 
         <DeckOverview 
           key={x} 
+          style={styles.deck}
           name={x} 
           cardCount={this.state[x].questions.length}
-          onPress={() => navigation.navigate('Deck')}
+          onPress={() => navigation.navigate('Deck', {data: this.state[x]})}
         />)}
       </View>
     )
@@ -34,8 +35,13 @@ export default class DeckList extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#ffffff',
     alignItems: 'center',
     justifyContent: 'center',
   },
+  deck: {
+    borderBottomColor: 'black',
+    borderBottomWidth: 2,
+    marginBottom: 30
+  }
 });

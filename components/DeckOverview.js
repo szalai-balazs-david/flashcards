@@ -1,11 +1,11 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 export default function DeckOverview({name, cardCount, onPress}) {
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
-      <Text>Deck: {name}</Text>
-      <Text>{cardCount} cards</Text>
+      <Text style={deckStyles.deckName}>{name}</Text>
+      <Text style={deckStyles.cardCount}>{cardCount} cards</Text>
     </TouchableOpacity>
   );
 }
@@ -13,8 +13,22 @@ export default function DeckOverview({name, cardCount, onPress}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width: '90%',
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    borderBottomColor: 'black',
+    borderBottomWidth: 2,
+    marginBottom: 30
+  }
+});
+
+export const deckStyles = StyleSheet.create({
+  deckName:{
+    fontSize: 40,
+    color: 'black'
   },
+  cardCount: {
+    fontSize: 20
+  }
 });
