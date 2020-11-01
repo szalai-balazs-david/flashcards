@@ -17,6 +17,13 @@ export default class Deck extends React.Component {
     })
   }
 
+  componentDidUpdate(){
+    getDeck(this.props.route.params.title)
+    .then((deck) => {
+      this.setState(() => deck)
+    })
+  }
+
   render(){
     const {navigation} = this.props
     const {title, questions} = this.state
@@ -28,7 +35,7 @@ export default class Deck extends React.Component {
         </View>
         <View style={styles.container}>
           <TouchableOpacity 
-            onPress={() => navigation.navigate('Add Card')}
+            onPress={() => navigation.navigate('Add Card', {title})}
             style={styles.container}
           >
             <Text 

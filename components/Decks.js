@@ -15,6 +15,13 @@ export default class DeckList extends Component {
     })
   }
 
+  componentDidUpdate(){
+    getDecks()
+    .then((decks) => {
+      this.setState(() => decks)
+    })
+  }
+
   render(){
     const {navigation } = this.props
     return (

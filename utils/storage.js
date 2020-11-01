@@ -57,24 +57,21 @@ export async function removeDeck(name) {
   }
 }
 
+//ToDo: This messes with order of decks!
 export async function addCard (name, question, answer) {
   try {
-    getDecks()
-    .then((decks) => {
-      return {
-        ...decks,
-        [name]:{
-          ...decks[name],
-          questions: decks[name].questions.concat({
-            question,
-            answer
-          })
-        }
+    const decks = await getDecks()
+    const newDecks = {
+      ...decks,
+      [name]:{
+        ...decks[name],
+        questions: decks[name].questions.concat({
+          question,
+          answer
+        })
       }
-    })
-    .then(async (newDecks) => {
-      await saveDecks(newDecks)
-    })
+    }
+    await saveDecks(newDecks)
   } catch (e) {
     Alert.alert("addCard", e)
   }

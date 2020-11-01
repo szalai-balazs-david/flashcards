@@ -1,11 +1,16 @@
 import React, { useEffect } from 'react'
 import { StyleSheet, Text, View, TextInput, Alert, TouchableOpacity } from 'react-native'
 import {useForm} from 'react-hook-form'
+import {addCard} from '../utils/storage'
 
-export default function AddCard() {  
+export default function AddCard({navigation, route}) {  
 
   const onSubmit = data => {
-    Alert.alert('Data', JSON.stringify(data))
+    const {title} = route.params
+    addCard(title, data.question, data.answer)
+    .then(() => {
+      navigation.navigate('Deck', {title})
+    })
   }
 
   const {register, handleSubmit, setValue} = useForm()
