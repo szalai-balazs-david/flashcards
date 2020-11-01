@@ -13,7 +13,8 @@ export default function DeckOverview({name, cardCount, onPress}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: '90%',
+    width: '100%',
+    height: 150,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
