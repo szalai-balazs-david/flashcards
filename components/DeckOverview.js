@@ -1,12 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
-export default function DeckOverview({name, cardCount}) {
+export default function DeckOverview({name, cardCount, onPress}) {
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={onPress}>
       <Text>Deck: {name}</Text>
       <Text>{cardCount} cards</Text>
-    </View>
+    </TouchableOpacity>
   );
 }
 

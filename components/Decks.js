@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Button, View } from 'react-native';
 import * as database from '../utils/storage'
 import DeckOverview from './DeckOverview'
 
@@ -15,10 +15,17 @@ export default class DeckList extends Component {
   }
 
   render(){
+    const {navigation } = this.props
     return (
       <View style={styles.container}>
         {Object.keys(this.state)
-        .map(x => <DeckOverview key={x} name={x}  cardCount={this.state[x].questions.length}/>)}
+        .map(x => 
+        <DeckOverview 
+          key={x} 
+          name={x} 
+          cardCount={this.state[x].questions.length}
+          onPress={() => navigation.navigate('Deck')}
+        />)}
       </View>
     )
   }
