@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native'
-import {useForm} from 'react-hook-form'
+import {useForm, Controller } from 'react-hook-form'
 import {addCard} from '../utils/storage'
 
 export default function AddCard({navigation, route}) {  
@@ -13,29 +13,44 @@ export default function AddCard({navigation, route}) {
     })
   }
 
-  const {register, handleSubmit, setValue} = useForm()
-
-  useEffect(() => {
-    register("question")
-    register("answer")
-  }, [register])
+  const { control, handleSubmit, errors, register } = useForm()
 
   return (
     <View style={styles.container}>
-      <Text>Question</Text>
-      <TextInput 
-        onChangeText={text => {
-          setValue("question", text)
-        }}
-        style={styles.inputField}
+      <Controller
+        control={control}
+        render={({ onChange, onBlur, value }) => (
+          <TextInput
+            style={styles.inputField}
+            onBlur={onBlur}
+            onChangeText={value => onChange(value)}
+            value={value}
+            placeholder="Question"
+          />
+        )}
+        name="question"
+        rules={{ required: true }}
+        defaultValue=""
       />
-      <Text>Answer</Text>
-      <TextInput 
-        onChangeText={text => {
-          setValue("answer", text)
-        }}
-        style={styles.inputField}
+      {errors.question && <Text>This is required.</Text>}
+      
+      <Controller
+        control={control}
+        render={({ onChange, onBlur, value }) => (
+          <TextInput
+            style={styles.inputField}
+            onBlur={onBlur}
+            onChangeText={value => onChange(value)}
+            value={value}
+            placeholder="Answer"
+          />
+        )}
+        name="answer"
+        rules={{ required: true }}
+        defaultValue=""
       />
+      {errors.answer && <Text>This is required.</Text>}
+
       <TouchableOpacity
         onPress={handleSubmit(onSubmit)}
       >
