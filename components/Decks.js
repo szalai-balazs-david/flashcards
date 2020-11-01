@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import * as database from '../utils/storage'
-import Deck from './Deck'
+import DeckOverview from './DeckOverview'
 
 export default class DeckList extends Component {
   state = {
@@ -18,7 +18,7 @@ export default class DeckList extends Component {
     return (
       <View style={styles.container}>
         {Object.keys(this.state)
-        .map(x => <Deck key={x} name={x}/>)}
+        .map(x => <DeckOverview key={x} name={x}  cardCount={this.state[x].questions.length}/>)}
       </View>
     )
   }
