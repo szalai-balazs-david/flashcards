@@ -15,10 +15,8 @@ export async function getDecks() {
 
 export async function getDeck(name) {
   try {
-    getDecks()
-    .then((decks) => {
-      return decks[name]
-    })
+    const decks = await getDecks()
+    return decks[name]
   } catch (e) {
     Alert.alert("getDeck", e)
   }

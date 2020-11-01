@@ -3,6 +3,7 @@ import { StyleSheet, Button, View } from 'react-native';
 import {getDecks} from '../utils/storage'
 import DeckOverview from './DeckOverview'
 
+//ToDo: add loading
 export default class DeckList extends Component {
   state = {
   }
@@ -25,7 +26,7 @@ export default class DeckList extends Component {
           style={styles.deck}
           name={x} 
           cardCount={this.state[x].questions.length}
-          onPress={() => navigation.navigate('Deck', {data: this.state[x]})}
+          onPress={() => navigation.navigate('Deck', {title: x})}
         />)}
       </View>
     )

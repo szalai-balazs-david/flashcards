@@ -1,50 +1,67 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native';
 import {deckStyles} from './DeckOverview'
+import {getDeck} from '../utils/storage'
 
-export default function Deck({navigation, route}) {
-  const {title, questions} = route.params.data
-  return (
-    <View style={styles.container}>
-      <View style={styles.containerBig}>
-        <Text style={deckStyles.deckName}>{title}</Text>
-        <Text style={deckStyles.cardCount}>{questions.length} cards</Text>
-      </View>
+//ToDo: add loading
+export default class Deck extends React.Component {
+  state = {
+    title: '',
+    questions: []
+  }
+
+  componentDidMount(){
+    getDeck(this.props.route.params.title)
+    .then((deck) => {
+      this.setState(() => deck)
+    })
+  }
+
+  render(){
+    const {navigation} = this.props
+    const {title, questions} = this.state
+    return (
       <View style={styles.container}>
-        <TouchableOpacity 
-          onPress={() => navigation.navigate('AddCard')}
-          style={styles.container}
-        >
-          <Text 
-            style={
-              {
-                ...styles.button, 
-                ...styles.addCard
-              }
-            }
+        <View style={styles.containerBig}>
+          <Text style={deckStyles.deckName}>{title}</Text>
+          <Text style={deckStyles.cardCount}>{questions.length} cards</Text>
+        </View>
+        <View style={styles.container}>
+          <TouchableOpacity 
+            onPress={() => navigation.navigate('AddCard')}
+            style={styles.container}
           >
-            Add Card
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('Quiz')}
-          disabled={questions.length === 0}
-          style={styles.container}
-        >
-          <Text 
-            style={
-              {
-                ...styles.button, 
-                ...(questions.length === 0 ? styles.startQuizDisabled : styles.startQuiz)
+            <Text 
+              style={
+                {
+                  ...styles.button, 
+                  ...styles.addCard
+                }
               }
-            }
+            >
+              Add Card
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Quiz')}
+            disabled={questions.length === 0}
+            style={styles.container}
           >
-            Start Quiz
-          </Text>
-        </TouchableOpacity>
+            <Text 
+              style={
+                {
+                  ...styles.button, 
+                  ...(questions.length === 0 ? styles.startQuizDisabled : styles.startQuiz)
+                }
+              }
+            >
+              Start Quiz
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
-  );
+    );
+  }
 }
 
 const styles = StyleSheet.create({
