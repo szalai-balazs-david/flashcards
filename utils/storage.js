@@ -44,14 +44,9 @@ export async function addDeck(name) {
 
 export async function removeDeck(name) {
   try {
-    getDecks()
-    .then((decks) => {
-      decks[name] = undefined
-      return decks
-    })
-    .then(async (newDecks) => {
-      await saveDecks(newDecks)
-    })
+    const decks = await getDecks()
+    decks[name] = undefined
+    await saveDecks(decks)
   } catch (e) {
     Alert.alert("removeDeck", e)
   }
