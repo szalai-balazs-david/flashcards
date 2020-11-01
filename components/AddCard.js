@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native'
 import {useForm, Controller } from 'react-hook-form'
 import {addCard} from '../utils/storage'
@@ -13,7 +13,7 @@ export default function AddCard({navigation, route}) {
     })
   }
 
-  const { control, handleSubmit, errors, register } = useForm()
+  const { control, handleSubmit, errors } = useForm()
 
   return (
     <View style={styles.container}>
