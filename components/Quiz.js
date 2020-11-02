@@ -17,18 +17,21 @@ export default function Quiz({route}) {
   }
 
   const question = (q) => (
-    <Card 
-      question={q.question}
-      answer={q.answer}
-      onCorrect={onCorrect}
-      onIncorrect={onIncorrect}
-    />
+    <View style={styles.container}>
+      <Text style={styles.stats}>Question: {current + 1}/{questions.length}</Text>
+      <Card 
+        question={q.question}
+        answer={q.answer}
+        onCorrect={onCorrect}
+        onIncorrect={onIncorrect}
+      />
+    </View>
   )
 
   const statistics = () => (
     <View style={styles.container}>
-      <Text style={styles.stats}>Finished!</Text>
-      <Text style={styles.stats}>Result: {correct} out of {questions.length} correct. ({Math.round(100*correct/questions.length)}%)</Text>
+      <Text style={styles.result}>Finished!</Text>
+      <Text style={styles.result}>Result: {correct} out of {questions.length} correct. ({Math.round(100*correct/questions.length)}%)</Text>
     </View>
   )
 
@@ -52,7 +55,11 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
     color: 'black'
   },
-  stats: {
+  stats:{
+    fontSize: 16,
+    color: 'black'
+  },
+  result: {
     fontSize: 24,
     color: 'black'
   }
