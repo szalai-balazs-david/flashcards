@@ -4,7 +4,6 @@ import {useForm, Controller } from 'react-hook-form'
 import {addCard, overwriteCard} from '../utils/storage'
 
 export default function AddCard({navigation, route}) {
-  //ToDo: Don't allow to add questions that already exist
   const onSubmit = data => {
     const {title, questions} = route.params
     if(questions.includes(data.question)){

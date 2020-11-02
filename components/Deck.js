@@ -78,7 +78,7 @@ export default class Deck extends React.Component {
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={() => navigation.navigate('Quiz')}
+            onPress={() => navigation.navigate('Quiz', {deck: {title, questions}})}
             disabled={questions.length === 0}
             style={{ 
               ...styles.button,
