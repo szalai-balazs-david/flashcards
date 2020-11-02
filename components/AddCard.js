@@ -97,12 +97,13 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     fontSize: 20,
     borderColor: 'black',
+    marginBottom: 30
   },
   submitButton: {
     textAlignVertical: 'center',
     textAlign: 'center',
     width: 200,
-    height: 70,
+    height: 60,
     borderWidth: 1,
     borderRadius: 5,
     fontSize: 20,
