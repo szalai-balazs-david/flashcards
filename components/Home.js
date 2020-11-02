@@ -10,21 +10,12 @@ const Tab = createBottomTabNavigator();
 export default function Home() {
   return (      
     <Tab.Navigator
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName;
-
-          if (route.name === 'Decks') {
-            iconName = focused
-              ? 'ios-information-circle'
-              : 'ios-information-circle-outline';
-          } else if (route.name === 'Settings') {
-            iconName = focused ? 'ios-list-box' : 'ios-list';
-          }
-          return <Ionicons name={iconName} size={size} color={color} />;
-        },
-      })}
       tabBarOptions={{
+        labelStyle: {
+          fontSize: 20,
+          margin: 0,
+          padding: 0,
+        },
         activeTintColor: 'tomato',
         inactiveTintColor: 'gray',
       }}

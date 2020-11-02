@@ -25,14 +25,16 @@ export async function getDeck(name) {
 export async function addDeck(name) {
   try {
     const decks = await getDecks()
-    const newDecks = {
-      ...decks,
-      [name]: {
-        title: name,
-        questions: []
+    if(!Object.keys(decks).includes(name)){
+      const newDecks = {
+        ...decks,
+        [name]: {
+          title: name,
+          questions: []
+        }
       }
+      await saveDecks(newDecks)
     }
-    await saveDecks(newDecks)
   } catch (e) {
     Alert.alert("addDeck", e)
   }
