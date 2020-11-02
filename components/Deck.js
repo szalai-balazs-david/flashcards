@@ -35,7 +35,7 @@ export default class Deck extends React.Component {
   render(){
     const {navigation} = this.props
     const {title, questions} = this.state
-  
+
     const onRemove = e => {
       Alert.alert(
         "Confirmation Required",
@@ -66,7 +66,7 @@ export default class Deck extends React.Component {
         </View>
         <View style={styles.container}>
           <TouchableOpacity 
-            onPress={() => navigation.navigate('Add Card', {title})}
+            onPress={() => navigation.navigate('Add Card', {title, questions: questions.map(x => x.question)})}
             style={{ 
               ...styles.button,
               ...styles.addCard

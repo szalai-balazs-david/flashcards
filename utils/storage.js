@@ -48,7 +48,6 @@ export async function removeDeck(name) {
   }
 }
 
-//ToDo: This messes with order of decks!
 export async function addCard (name, question, answer) {
   try {
     const decks = await getDecks()
@@ -59,6 +58,19 @@ export async function addCard (name, question, answer) {
     await saveDecks(decks)
   } catch (e) {
     Alert.alert("addCard", e)
+  }
+}
+
+export async function overwriteCard (name, question, newAnswer) {
+  try {
+    const decks = await getDecks()
+    const deck = decks[name]
+    const newElement = {question, answer: newAnswer}
+    deck.questions = deck.questions.map(x => x.question === question ? newElement : x)
+    decks[name] = deck
+    await saveDecks(decks)
+  } catch (e) {
+    Alert.alert("overwriteCard", e)
   }
 }
 

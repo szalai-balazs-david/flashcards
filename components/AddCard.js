@@ -1,18 +1,40 @@
 import React from 'react'
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native'
 import {useForm, Controller } from 'react-hook-form'
-import {addCard} from '../utils/storage'
+import {addCard, overwriteCard} from '../utils/storage'
 
-export default function AddCard({navigation, route}) {  
-
+export default function AddCard({navigation, route}) {
+  //ToDo: Don't allow to add questions that already exist
   const onSubmit = data => {
-    const {title} = route.params
-    addCard(title, data.question, data.answer)
-    .then(() => {
-      navigation.navigate('Deck', {title})
-    })
+    const {title, questions} = route.params
+    if(questions.includes(data.question)){
+      Alert.alert(
+        "Overwrite question?",
+        "This question is already in the deck. Do you want to overwrite it?",
+        [
+          {
+            text: "Cancel",
+            style: "cancel"
+          },
+          {
+            text: "Overwrite",
+            onPress: () => overwriteCard(title, data.question, data.answer)
+              .then(() => {
+                navigation.navigate('Decks')
+              }),
+            style: "default"
+          }
+        ]
+      )
+    }
+    else{
+      addCard(title, data.question, data.answer)
+      .then(() => {
+        navigation.navigate('Deck', {title})
+      })
+    }
   }
-
+  
   const { control, handleSubmit, errors } = useForm()
 
   return (
