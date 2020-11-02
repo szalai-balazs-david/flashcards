@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import Card from './Card'
 
 export default function Quiz({route}) {
@@ -14,6 +14,11 @@ export default function Quiz({route}) {
 
   const onIncorrect = () => {
     setCurrent(current + 1)
+  }
+
+  const onRestart = () => {
+    setCorrect(0)
+    setCurrent(0)
   }
 
   const question = (q) => (
@@ -31,7 +36,20 @@ export default function Quiz({route}) {
   const statistics = () => (
     <View style={styles.container}>
       <Text style={styles.result}>Finished!</Text>
-      <Text style={styles.result}>Result: {correct} out of {questions.length} correct. ({Math.round(100*correct/questions.length)}%)</Text>
+      <Text style={styles.result}>
+        Result: {correct} out of {questions.length} correct. ({Math.round(100*correct/questions.length)}%)
+      </Text>
+      <TouchableOpacity
+        onPress={onRestart}
+        style={{ 
+          ...styles.button,
+          ...styles.restart
+        }}
+      >
+        <Text style={styles.buttonText}>
+          Restart
+        </Text>
+      </TouchableOpacity>
     </View>
   )
 
@@ -61,6 +79,26 @@ const styles = StyleSheet.create({
   },
   result: {
     fontSize: 24,
+    color: 'black'
+  },
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 200,
+    height: 70,
+    borderWidth: 1,
+    borderRadius: 5,
+    borderColor: 'black',
+    borderRadius: 5,
+    marginBottom: 10
+  },
+  restart:{
+    backgroundColor: 'green',
+    color: 'white'
+  },
+  buttonText: {
+    fontSize: 20,
+    fontWeight: 'bold',
     color: 'black'
   }
 });

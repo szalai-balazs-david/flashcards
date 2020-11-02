@@ -35,6 +35,17 @@ export default class DeckList extends Component {
   render(){
     const {navigation } = this.props
 
+    const titles = Object.keys(this.state.decks)
+
+    if(titles.length === 0){
+      return(
+      <View style={styles.container}>
+        <Text style={styles.emptyText}>
+          Create a deck to start playing!
+        </Text>
+      </View>)
+    }
+
     const renderItem = ({item}) => (
       <DeckOverview 
         name={item} 
@@ -46,7 +57,7 @@ export default class DeckList extends Component {
     return (
       <SafeAreaView style={styles.container}>
         <FlatList 
-          data={Object.keys(this.state.decks)}
+          data={titles}
           renderItem={renderItem}
           keyExtractor={x => x}
           style={styles.list}
@@ -65,5 +76,10 @@ const styles = StyleSheet.create({
   },
   list: {
     width: '90%'
+  },
+  emptyText: {
+    color: 'black',
+    fontSize: 16,
+    textAlign: 'center'
   }
 });

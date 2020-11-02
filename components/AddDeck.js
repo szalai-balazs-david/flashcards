@@ -12,6 +12,7 @@ export default function AddDeck({navigation}) {
     .then(() => {
       reset()
       navigation.navigate('Decks')
+      navigation.navigate('Deck', {title: data.title})
     })
   }
 
@@ -38,7 +39,7 @@ export default function AddDeck({navigation}) {
         onPress={handleSubmit(onSubmit)}
       >
         <Text style={styles.submitButton}>
-          Submit
+          Create
         </Text>
       </TouchableOpacity>
     </View>
