@@ -11,7 +11,7 @@ export default function AddDeck({navigation}) {
     addDeck(data.title)
     .then(() => {
       reset()
-      navigation.navigate('Home')
+      navigation.navigate('Decks')
     })
   }
 
