@@ -6,7 +6,10 @@ const STORAGE_KEY = "BalazsFlashcards"
 export async function getDecks() {
   try {
     const decks = await AsyncStorage.getItem(STORAGE_KEY)
-    const parsed = JSON.parse(decks)
+    if(decks === null){
+      await saveDecks({})
+    }
+    const parsed = decks === null ? {} : JSON.parse(decks)
     return parsed
   } catch (e) {
     Alert.alert("getDecks", e)
