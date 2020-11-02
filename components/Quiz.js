@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import Card from './Card'
+import {clearLocalNotification, setLocalNotification} from '../utils/notifications'
 
 export default function Quiz({route}) {
   const [correct, setCorrect] = useState(0)
@@ -33,7 +34,11 @@ export default function Quiz({route}) {
     </View>
   )
 
-  const statistics = () => (
+  const statistics = () => {
+    clearLocalNotification()
+    .then(setLocalNotification)
+    
+    return(
     <View style={styles.container}>
       <Text style={styles.result}>Finished!</Text>
       <Text style={styles.result}>
@@ -51,7 +56,7 @@ export default function Quiz({route}) {
         </Text>
       </TouchableOpacity>
     </View>
-  )
+  )}
 
   return(
     <View style={styles.container}>

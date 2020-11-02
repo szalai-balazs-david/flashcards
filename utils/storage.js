@@ -1,11 +1,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Alert } from 'react-native';
 
-const storageKey = "BalazsFlashcards"
+const STORAGE_KEY = "BalazsFlashcards"
 
 export async function getDecks() {
   try {
-    const decks = await AsyncStorage.getItem(storageKey)
+    const decks = await AsyncStorage.getItem(STORAGE_KEY)
     const parsed = JSON.parse(decks)
     return parsed
   } catch (e) {
@@ -78,5 +78,5 @@ export async function overwriteCard (name, question, newAnswer) {
 
 async function saveDecks(decks) {
   const jsonDecks = JSON.stringify(decks)
-  await AsyncStorage.setItem(storageKey, jsonDecks)
+  await AsyncStorage.setItem(STORAGE_KEY, jsonDecks)
 }
