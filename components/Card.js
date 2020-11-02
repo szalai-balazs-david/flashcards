@@ -4,6 +4,16 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 export default function Card({question, answer, onCorrect, onIncorrect}) {
   const [showQuestion, setShowQuestion] = useState(true);
 
+  const handleCorrect = () => {
+    setShowQuestion(true)
+    onCorrect()
+  }
+
+  const handleIncorrect = () => {
+    setShowQuestion(true)
+    onIncorrect()
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.main}>{showQuestion ? question : answer}</Text>
@@ -21,7 +31,7 @@ export default function Card({question, answer, onCorrect, onIncorrect}) {
       </TouchableOpacity>
       
       <TouchableOpacity
-        onPress={() => onCorrect()}
+        onPress={() => handleCorrect()}
         style={{ 
           ...styles.button,
           ...styles.correctButton
@@ -33,7 +43,7 @@ export default function Card({question, answer, onCorrect, onIncorrect}) {
       </TouchableOpacity>
       
       <TouchableOpacity
-        onPress={() => onIncorrect()}
+        onPress={() => handleIncorrect()}
         style={{ 
           ...styles.button,
           ...styles.wrongButton
