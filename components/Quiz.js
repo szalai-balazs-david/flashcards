@@ -3,37 +3,39 @@ import { StyleSheet, Text, View } from 'react-native';
 import Card from './Card'
 
 export default function Quiz({route}) {
-  const [questions, setQuestions] = useState(route.params.deck.questions)
   const [correct, setCorrect] = useState(0)
+  const [current, setCurrent] = useState(0)
+  const {title, questions} = route.params.deck
 
-  const onCorrect = (q) => {
+  const onCorrect = () => {
     setCorrect(correct + 1)
-    setQuestions(questions.filter(x => x.question !== q))
+    setCurrent(current + 1)
   }
 
-  const onIncorrect = (q) => {
-    setQuestions(questions.filter(x => x.question !== q))
+  const onIncorrect = () => {
+    setCurrent(current + 1)
   }
 
-  if(questions.length > 0){
-    return (
-      <View style={styles.container}>
-        <Card 
-          question={questions[0].question}
-          answer={questions[0].answer}
-          onCorrect={onCorrect}
-          onIncorrect={onIncorrect}
-        />
-      </View>
-    )
-  }
+  const question = (q) => (
+    <Card 
+      question={q.question}
+      answer={q.answer}
+      onCorrect={onCorrect}
+      onIncorrect={onIncorrect}
+    />
+  )
 
-  const questionCount = route.params.deck.questions.length
-  const successPercent = Math.round(100*correct/questionCount)
+  const statistics = () => (
+    <View style={styles.container}>
+      <Text style={styles.stats}>Finished!</Text>
+      <Text style={styles.stats}>Result: {correct} out of {questions.length} correct. ({Math.round(100*correct/questions.length)}%)</Text>
+    </View>
+  )
+
   return(
     <View style={styles.container}>
-      <Text>Finished!</Text>
-      <Text>Result: {correct} out of {questionCount} correct. ({successPercent}%)</Text>
+      <Text style={styles.header}>Deck: {title}</Text>
+      {questions.length > current ? question(questions[current]) : statistics()}
     </View>
   )
 }
@@ -45,4 +47,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  header: {
+    fontSize: 24,
+    textDecorationLine: 'underline',
+    color: 'black'
+  },
+  stats: {
+    fontSize: 24,
+    color: 'black'
+  }
 });
